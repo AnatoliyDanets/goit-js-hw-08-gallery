@@ -89,19 +89,24 @@ function addCollectionCards(galleryItems) {
 }
 
 function onCollectionGalleryClick(e) {
+   
    const isGalleryImageEl = e.target.classList.contains('gallery__image');
     if (!isGalleryImageEl) {
        return;
     }
+    
     onModalImageClick();
     imageModalShow(e);
     e.preventDefault();
-    console.log(e.target.dataset.source)
+    // console.log(e.target.dataset.source)
+   
     }
 
 function onModalImageClick() {
     modal.classList.add('is-open');
     window.addEventListener('keydown', onEscKeyClose);
+ 
+
 }
 
 
@@ -116,6 +121,7 @@ function imageModalShow(e) {
  
     imageModal.setAttribute('src', `${e.target.dataset.source}`);
     imageModal.setAttribute('alt', `${e.target.alt}`);
+     
 }
 
 function onOverlayClose(e) {
@@ -132,4 +138,55 @@ function onEscKeyClose(e) {
    
 }
 
+
+// Управление стрелками клавиатуры
+let maxIndex =galleryItems.length;
+let slideIndex=0;
+ 
+function onArrowRigthClick(e) {
+ 
+    if (e.code === 'ArrowRight') {
+  
+        rigthArrow()
+   
+    } 
+}
+
+
+function rigthArrow() {
+  
+         slideIndex += 1;
+       if (slideIndex === maxIndex) {
+        slideIndex = 0;
+    }
+      imageModal.src = galleryItems[slideIndex].original;
+      imageModal.alt = galleryItems[slideIndex].description;
+ 
+    console.log( slideIndex);
+    
+  
+}
+
+function onArrowLeftClick(e) {
+     
+    if (e.code === 'ArrowLeft') {
+        leftArrow()
+    }
+
+}
+function leftArrow() {
+
+      slideIndex-=1;
+    if (slideIndex < 0) {
+        slideIndex =galleryItems.length - 1;
+    } 
+     imageModal.src = galleryItems[slideIndex].original;
+      imageModal.alt = galleryItems[slideIndex].description;
+ 
+   console.log( slideIndex);
+}
+
+
+window.addEventListener('keydown', onArrowRigthClick); 
+window.addEventListener('keydown', onArrowLeftClick);
 
